@@ -1,0 +1,7 @@
+{
+  "name": "new-social-tables",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
