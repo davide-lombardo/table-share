@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ExploreContainerComponentModule } from '../../../explore-container/explore-container.module';
-import { Tab1Page } from './tab1.page';
 
-import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { TableDetailPage } from './table-detail/table-detail.page';
+import { TablesTabRoutingModule } from './tables-tab-routing.module';
+import { TablesTabPage } from './tables-tab.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { TableDetailPage } from './table-detail/table-detail.page';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule,
+    TablesTabRoutingModule,
   ],
-  declarations: [Tab1Page, TableDetailPage],
+  declarations: [TablesTabPage, TableDetailPage],
 })
-export class Tab1PageModule {}
+export class TablesTabModule {}

@@ -7,7 +7,7 @@ import {
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
-const redirectLoggedInToHome = () => redirectLoggedInTo(['tabs/tab1']);
+const redirectLoggedInToHome = () => redirectLoggedInTo(['tabs/tables-tab']);
 
 const routes: Routes = [
   {
@@ -16,12 +16,6 @@ const routes: Routes = [
       import('./components/login/login.module').then((m) => m.LoginPageModule),
     ...canActivate(redirectLoggedInToHome),
   },
-  // {
-  //   path: 'home',
-  //   loadChildren: () =>
-  //     import('./components/home/home.module').then((m) => m.HomePageModule),
-  //   ...canActivate(redirectUnauthorizedToLogin),
-  // },
   {
     path: 'tabs',
     loadChildren: () =>

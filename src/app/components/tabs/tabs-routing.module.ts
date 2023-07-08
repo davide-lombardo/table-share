@@ -8,21 +8,23 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'tables-tab',
         loadChildren: () =>
           import('./tables-tab/tables-tab.module').then(
-            (m) => m.TabsPageModule
+            (m) => m.TablesTabModule
           ),
       },
       {
-        path: 'tab2',
+        path: 'chat-tab',
         loadChildren: () =>
-          import('./tab2/tab2.module').then((m) => m.Tab2PageModule),
+          import('./chat-tab/chat-tab.module').then((m) => m.ChatTabModule),
       },
       {
-        path: 'tab3',
+        path: 'notifications-tab',
         loadChildren: () =>
-          import('./tab3/tab3.module').then((m) => m.Tab3PageModule),
+          import('./notifications-tab/notifications-tab.module').then(
+            (m) => m.NotificationsTabModule
+          ),
       },
       {
         path: '',

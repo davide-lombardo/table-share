@@ -6,11 +6,11 @@ import { delay, timer } from 'rxjs';
 import { Table } from 'src/app/models/interfaces/table.model';
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
+  selector: 'app-tables-tab',
+  templateUrl: 'tables-tab.page.html',
+  styleUrls: ['tables-tab.page.scss'],
 })
-export class Tab1Page {
+export class TablesTabPage {
   pageSize = 10; // Number of tables to load per page
   loadedTablesCount = 0; // Number of tables currently loaded
 
@@ -29,7 +29,9 @@ export class Tab1Page {
       location: faker.location.city(),
       address: faker.location.streetAddress(),
       contact: faker.phone.number(),
-      images: faker.image.urlPicsumPhotos(),
+      images: Array.from({ length: 5 }).map(() =>
+        faker.image.urlPicsumPhotos()
+      ),
       totalSeats: 8,
       participants: faker.number.int({ min: 0, max: 8 }),
     }));
@@ -60,13 +62,14 @@ export class Tab1Page {
   }
 
   joinTable(table: Table) {
-    // Navigate to the table detail page and pass the selected item data
     const navigationExtras: NavigationExtras = {
       state: {
         table: table,
       },
     };
-
-    this.navCtrl.navigateForward('/table-detail', navigationExtras);
+ 
+    this.navCtrl.navigateForward(['/tabs/tables-tab/table-detail', navigationExtras]);
   }
+
+  
 }

@@ -6,7 +6,7 @@
     <ion-item *ngFor="let table of tables">
 
       <ion-card>
-        <img alt="Foto del locale" [src]="table.images" />
+        <img alt="Foto del locale" [src]="table?.images?.[0]" />
         <ion-card-header>
           <ion-card-title>{{ table.name + ' - ' + table.location }}</ion-card-title>
           <ion-card-subtitle>{{ table.address + ' - ' + (table.time | date) }}</ion-card-subtitle>

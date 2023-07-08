@@ -10,15 +10,24 @@ export interface Table {
   location?: string;
   address?: string;
   contact?: string;
-  images?: string;
+  images?: string[];
   tags?: string;
   totalSeats?: number;
   participants?: number;
+  ageRange?: number;
+  participantsMetadata?: ParticipantsMetadata[];
 }
 
 export interface User {
   id: string;
   name: string;
+}
+
+export interface ParticipantsMetadata {
+  id: string,
+  name: string,
+  avatar: string,
+  age: number,
 }
 
 
