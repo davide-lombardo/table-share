@@ -1,0 +1,30 @@
+$font-primary: (
+  family: 'Open-sans',
+  weight: normal,
+  style: normal,
+  path: './assets/fonts/open-sans/OpenSans-Regular.tff',
+);
+
+$font-heading: (
+  family: 'Roboto',
+  weight: bold,
+  style: normal,
+  path: 'path/to/font/Roboto.ttf',
+);
+
+$font-body: (
+  family: 'Open Sans',
+  weight: normal,
+  style: italic,
+  path: 'path/to/font/OpenSans.ttf',
+);
+
+// Font face mixin
+@mixin font-face($family, $weight, $style, $path) {
+  @font-face {
+    font-family: #{$family};
+    font-weight: #{$weight};
+    font-style: #{$style};
+    src: url(#{$path});
+  }
+}
