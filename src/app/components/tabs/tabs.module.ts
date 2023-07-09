@@ -5,8 +5,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
-import { TabBarComponent } from '../tab-bar/tab-bar.component';
 import { ThemeSwitchComponent } from '../theme-switch/theme-switch.component';
+import { TabBarComponent } from './tab-bar/tab-bar.component';
 import { TabsPage } from './tabs.page';
 
 @NgModule({

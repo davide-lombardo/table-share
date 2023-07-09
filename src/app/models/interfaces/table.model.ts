@@ -1,12 +1,10 @@
-import { UserInfo } from 'firebase/auth';
 
-interface Contact extends UserInfo {}
 
 export interface Table {
   id?: string;
   name?: string;
   description?: string;
-  time?: Date;
+  time?: any;
   location?: string;
   address?: string;
   contact?: string;
@@ -14,13 +12,9 @@ export interface Table {
   tags?: string;
   totalSeats?: number;
   participants?: number;
-  ageRange?: number;
+  maxAge?: number;
+  minAge?: number;
   participantsMetadata?: ParticipantsMetadata[];
-}
-
-export interface User {
-  id: string;
-  name: string;
 }
 
 export interface ParticipantsMetadata {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { faker } from '@faker-js/faker';
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { faker } from '@faker-js/faker';
 export class ChatTabPage {
   message: any;
 
-  constructor() {}
+  constructor(private navCtrl: NavController) {}
 
   ngOnInit() {
     this.generateMessage();
@@ -22,5 +23,9 @@ export class ChatTabPage {
       date: faker.date.past(),
       content: faker.lorem.paragraphs(),
     };
+  }
+
+  openChat() {
+    this.navCtrl.navigateForward(['/tabs/chat-tab/open-chat']);
   }
 }

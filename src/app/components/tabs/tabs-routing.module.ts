@@ -27,6 +27,11 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'add-table',
+        loadChildren: () =>
+          import('./add-table/add-table.module').then((m) => m.AddTableModule),
+      },
+      {
         path: '',
         redirectTo: '',
         pathMatch: 'full',

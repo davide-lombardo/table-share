@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
-import { faker } from '@faker-js/faker';
+import { DocumentData, Timestamp } from '@angular/fire/firestore';
+import { NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { delay, timer } from 'rxjs';
 import { Table } from 'src/app/models/interfaces/table.model';
+import { TableService } from 'src/app/services/table.service';
 
 @Component({
   selector: 'app-tables-tab',
@@ -16,60 +16,60 @@ export class TablesTabPage {
 
   tables: Table[] = [];
 
-  constructor(private router: Router, private navCtrl: NavController) {
+  constructor(
+    private navCtrl: NavController,
+    private tableService: TableService,
+  ) {
     this.loadTables();
   }
 
-  loadTables(event?: any) {
-    const newTables = Array.from({ length: this.pageSize }).map(() => ({
-      id: faker.string.uuid(),
-      name: faker.company.name(),
-      description: faker.commerce.productDescription(),
-      time: faker.date.future(),
-      location: faker.location.city(),
-      address: faker.location.streetAddress(),
-      contact: faker.phone.number(),
-      images: Array.from({ length: 5 }).map(() =>
-        faker.image.urlPicsumPhotos()
-      ),
-      totalSeats: 8,
-      participants: faker.number.int({ min: 0, max: 8 }),
-    }));
-
-    this.tables.push(...newTables);
-    this.loadedTablesCount += this.pageSize;
-
-    if (event) {
-      event.target.complete();
-    }
-  }
-
-  loadMoreTables(event: Event) {
-    const infiniteScroll = event.target as HTMLIonInfiniteScrollElement;
-
-    if (this.loadedTablesCount >= 100) {
-      // No more tables to load
-      infiniteScroll.complete();
-      infiniteScroll.disabled = true;
-      return;
-    }
-
-    timer(1000)
-      .pipe(delay(0))
-      .subscribe(() => {
-        this.loadTables(event);
+  private loadTables(): void {
+    this.tableService.getTables().subscribe((res: DocumentData[]) => {
+      res.map((table) => {
+        table['time'] = null;
+        this.tables.push(table as Table);
       });
+      this.loadedTablesCount = this.tables.length;
+    });
   }
 
-  joinTable(table: Table) {
-    const navigationExtras: NavigationExtras = {
-      state: {
-        table: table,
-      },
-    };
- 
-    this.navCtrl.navigateForward(['/tabs/tables-tab/table-detail', navigationExtras]);
+  public loadMoreTables(event: any): void {
+    this.tableService.getTables().subscribe((res: DocumentData[]) => {
+      const newTables: Table[] = res
+        .slice(this.loadedTablesCount, this.loadedTablesCount + this.pageSize)
+        .map((table) => {
+          table['time'] = null;
+          return table as Table;
+        });
+      this.tables.push(...newTables);
+      this.loadedTablesCount += newTables.length;
+
+      if (event) {
+        event.target.complete();
+      }
+    });
   }
 
-  
+  private formatTimestamp(timestamp: Timestamp): Date {
+    const date = timestamp.toDate();
+    return date;
+  }
+
+  public viewTable(table: Table) {
+    this.tableService.getTableById(table.id).subscribe((tableData) => {
+        tableData['time'] = null;
+
+      let navigationExtras: NavigationExtras = {
+        queryParams: {
+          table: JSON.stringify(tableData)
+        },
+      };
+      this.navCtrl.navigateForward(
+        '/tabs/tables-tab/table-detail',
+        navigationExtras
+      );
+
+    });
+  }
+
 }

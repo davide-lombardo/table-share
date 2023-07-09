@@ -1,6 +1,6 @@
 <ion-header>
 	<ion-toolbar color="primary">
-		<ion-title>Social Tables</ion-title>
+		<ion-title>Table Share</ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -9,13 +9,13 @@
 		<ion-item fill="solid" class="ion-margin-bottom">
 			<ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
 			<ion-note slot="error" *ngIf="(email?.dirty || email?.touched) && email?.errors">
-				Email is invalid
+				Email non valida
 			</ion-note>
 		</ion-item>
 		<ion-item fill="solid" class="ion-margin-bottom">
 			<ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
 			<ion-note slot="error" *ngIf="(password?.dirty || password?.touched) && password?.errors">
-				Password deve essere di 6 caratteri
+				La password deve essere di 6 caratteri
 			</ion-note>
 		</ion-item>
 
@@ -23,7 +23,7 @@
 			Log in
 		</ion-button>
 		<ion-button type="button" expand="block" color="light" (click)="register()">
-			Non sei registrato? Crea un account!
+			Crea un account!
 		</ion-button>
 
 		<ion-button type="button" expand="block" color="tertiary">

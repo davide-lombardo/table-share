@@ -1,5 +1,7 @@
+<div class="space"></div>
+
 <ion-content [fullscreen]="true">
-  <!-- <app-explore-container name="Tab 1 page"></app-explore-container> -->
+
   <ion-title>Tavoli aperti</ion-title>
 
   <ion-list>
@@ -9,7 +11,7 @@
         <img alt="Foto del locale" [src]="table?.images?.[0]" />
         <ion-card-header>
           <ion-card-title>{{ table.name + ' - ' + table.location }}</ion-card-title>
-          <ion-card-subtitle>{{ table.address + ' - ' + (table.time | date) }}</ion-card-subtitle>
+          <ion-card-subtitle>{{ table.address + ' - ' + (table.time?.toDate() | date:'yyyy/MM/dd h:mm:ss a') }}</ion-card-subtitle>
         </ion-card-header>
 
           <ion-card-content>
@@ -22,8 +24,8 @@
             <ion-button 
               [disabled]="table.participants === table.totalSeats"
               fill="outline"
-              (click)="joinTable(table)"
-              > Partecipa
+              (click)="viewTable(table)"
+              > Visualizza
             </ion-button>
           </div>
 
@@ -32,7 +34,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-infinite-scroll (ionInfinite)="loadMoreTables($event)">
+   <ion-infinite-scroll (ionInfinite)="loadMoreTables($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Caricando altri tavoli...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

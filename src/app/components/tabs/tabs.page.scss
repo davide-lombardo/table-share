@@ -1,6 +1,5 @@
 ion-header {
     border-radius: 0 0 10px 10px;
-    margin-bottom: 7rem;
 
     ion-toolbar {
         border-radius: 0 0 10px 10px;
@@ -88,4 +87,8 @@ ion-tab-button[aria-label="add"] {
     border-radius: 50%;
     margin-top: -15px;
   }
+}
+
+.space {
+    margin-bottom: 8rem;
 }

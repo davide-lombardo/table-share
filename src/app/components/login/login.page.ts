@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
     await loading.dismiss();
 
     if (user) {
-      this.router.navigateByUrl('/home', { replaceUrl: true });
+      this.router.navigateByUrl('/tabs/tables-tab', { replaceUrl: true });
     } else {
       this.showAlert('Registration fallita', 'Prova di nuovo!');
     }
@@ -60,7 +60,7 @@ export class LoginPage implements OnInit {
     await loading.dismiss();
 
     if (user) {
-      this.router.navigateByUrl('/home', { replaceUrl: true });
+      this.router.navigateByUrl('/tabs/tables-tab', { replaceUrl: true });
     } else {
       this.showAlert('Login fallita', 'Prova di nuovo!');
     }

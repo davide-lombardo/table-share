@@ -1,11 +1,15 @@
+<div class="space"></div>
+
 <ion-content [fullscreen]="true">
-  <ion-card>
+  <ion-title>Chat aperte</ion-title>
+
+  <ion-card (click)="openChat()">
     <ion-card-header>
       <ion-card-title>{{ message.title }}</ion-card-title>
       <ion-card-subtitle>{{ message.date | date: 'medium' }}</ion-card-subtitle>
     </ion-card-header>
   </ion-card>
-  <ion-card>
+  <ion-card (click)="openChat()">
     <ion-card-header>
       <ion-card-title>{{ message.title }}</ion-card-title>
       <ion-card-subtitle>{{ message.date | date: 'medium' }}</ion-card-subtitle>

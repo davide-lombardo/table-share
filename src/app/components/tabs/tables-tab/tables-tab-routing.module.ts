@@ -12,6 +12,13 @@ const routes: Routes = [
     path: 'table-detail',
     component: TableDetailPage,
   },
+  // {
+  //   path: ':id',
+  //   resolve: {
+  //     special: DataResolverService,
+  //   },
+  //   loadChildren: './details/details.module#DetailsPageModule',
+  // },
 ];
 
 @NgModule({
