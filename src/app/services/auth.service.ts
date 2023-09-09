@@ -1,11 +1,14 @@
 import { Injectable, NgZone } from '@angular/core';
 import {
   Auth,
+  User,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
 } from '@angular/fire/auth';
+import { DocumentData, Firestore, doc, docData } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +17,8 @@ export class AuthenticationService {
   constructor(
     public router: Router,
     public ngZone: NgZone,
-    private auth: Auth
+    private auth: Auth,
+    private firestore: Firestore
   ) {}
 
   get isLoggedIn(): boolean {
@@ -49,7 +53,16 @@ export class AuthenticationService {
     }
   }
 
-  logout() {
+  public logout(): Promise<void> {
     return signOut(this.auth);
+  }
+
+  public getLoggedUser(): User | null {
+    return this.auth.currentUser;
+  }
+
+  public getAvatarById(userId: string | undefined): Observable<DocumentData> {
+    const userDocRef = doc(this.firestore, `users/${userId}`);
+    return docData(userDocRef, { idField: 'id' });
   }
 }

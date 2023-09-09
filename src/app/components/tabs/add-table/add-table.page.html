@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tables-tab"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Torna alla lista</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <!-- Card content -->
+    <ion-card-content>
+      <form [formGroup]="tableForm" (ngSubmit)="onSubmit()">
+ 
+        <ion-item>
+          <ion-label position="floating">Nome</ion-label>
+          <ion-input aria-label="name" formControlName="name" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">
+            Locale
+          </ion-label>
+          <ion-input
+            id="place-input"
+            aria-label="place"
+            formControlName="place"
+            type="text"
+            required
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Data</ion-label>
+            <ion-datetime
+                formControlName="time"
+                displayFormat="MMM DD, YYYY HH:mm"
+            ></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Età minima</ion-label>
+          <ion-range
+            formControlName="minAge"
+            min="18"
+            max="65"
+            step="5"
+            pin="true"
+            aria-label="minAge"
+          ></ion-range>
+          <ion-note slot="end">{{ tableForm.value.minAge }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Età massima</ion-label>
+          <ion-range
+            formControlName="maxAge"
+            min="18"
+            max="65"
+            step="5"
+            pin="true"
+            aria-label="maxAge"
+          ></ion-range>
+          <ion-note slot="end">{{ tableForm.value.maxAge }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Minimo/Massimo posti</ion-label>
+          <ion-select formControlName="minMaxSeats">
+            <ion-select-option value="2/4">2 / 4</ion-select-option>
+            <ion-select-option value="3/6">3 / 6</ion-select-option>
+            <ion-select-option value="4/8">4 / 8</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button expand="full" type="submit" [disabled]="tableForm.invalid">
+          Crea tavolo
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

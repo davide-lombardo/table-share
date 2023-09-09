@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { DocumentData, Timestamp } from '@angular/fire/firestore';
 import { NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { Observable, map, of } from 'rxjs';
 import { Table } from 'src/app/models/interfaces/table.model';
 import { TableService } from 'src/app/services/table.service';
 
@@ -11,65 +11,54 @@ import { TableService } from 'src/app/services/table.service';
   styleUrls: ['tables-tab.page.scss'],
 })
 export class TablesTabPage {
-  pageSize = 10; // Number of tables to load per page
-  loadedTablesCount = 0; // Number of tables currently loaded
+  tables$: Observable<Table[]> = of([]);
 
-  tables: Table[] = [];
+  // loadedTablesCount = 0;
+  noMoreTablesToLoad = false;
+  loading = false;
 
   constructor(
     private navCtrl: NavController,
-    private tableService: TableService,
+    private tableService: TableService
   ) {
     this.loadTables();
   }
 
-  private loadTables(): void {
-    this.tableService.getTables().subscribe((res: DocumentData[]) => {
-      res.map((table) => {
-        table['time'] = null;
-        this.tables.push(table as Table);
-      });
-      this.loadedTablesCount = this.tables.length;
+  loadTables() {
+    this.tables$ = this.tableService.loadMoreTables();
+  }
+
+  public onScroll(): void {
+    if (this.noMoreTablesToLoad) {
+      return; 
+    }
+    
+    this.loading = true;
+    this.tableService.loadMoreTables().subscribe((newTables: Table[]) => {
+     if (newTables.length === 0) {
+      this.noMoreTablesToLoad = true;
+      this.loading = false;
+     } else {
+       this.tables$ = this.tables$.pipe(
+         map((tables: Table[]) => tables.concat(newTables))
+       );
+     }
+     this.loading = false;
     });
   }
 
-  public loadMoreTables(event: any): void {
-    this.tableService.getTables().subscribe((res: DocumentData[]) => {
-      const newTables: Table[] = res
-        .slice(this.loadedTablesCount, this.loadedTablesCount + this.pageSize)
-        .map((table) => {
-          table['time'] = null;
-          return table as Table;
-        });
-      this.tables.push(...newTables);
-      this.loadedTablesCount += newTables.length;
-
-      if (event) {
-        event.target.complete();
-      }
-    });
-  }
-
-  private formatTimestamp(timestamp: Timestamp): Date {
-    const date = timestamp.toDate();
-    return date;
-  }
-
-  public viewTable(table: Table) {
+  public viewTable(table: Table): void {
     this.tableService.getTableById(table.id).subscribe((tableData) => {
-        tableData['time'] = null;
-
       let navigationExtras: NavigationExtras = {
         queryParams: {
-          table: JSON.stringify(tableData)
+          table: JSON.stringify(tableData),
         },
       };
+
       this.navCtrl.navigateForward(
         '/tabs/tables-tab/table-detail',
         navigationExtras
       );
-
     });
   }
-
 }

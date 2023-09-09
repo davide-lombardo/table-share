@@ -25,7 +25,6 @@ export class LoginPage implements OnInit {
     });
   }
 
-  // Easy access for form fields
   get email() {
     return this.credentials.get('email');
   }
@@ -34,11 +33,11 @@ export class LoginPage implements OnInit {
     return this.credentials.get('password');
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
   }
 
-  async register() {
+  public async register(): Promise<void> {
     const loading = await this.loadingController.create();
     await loading.present();
 
@@ -52,7 +51,7 @@ export class LoginPage implements OnInit {
     }
   }
 
-  async login() {
+  public async login(): Promise<void> {
     const loading = await this.loadingController.create();
     await loading.present();
 
@@ -66,7 +65,7 @@ export class LoginPage implements OnInit {
     }
   }
 
-  async showAlert(header: string, message: string) {
+  private async showAlert(header: string, message: string): Promise<void> {
     const alert = await this.alertController.create({
       header,
       message,

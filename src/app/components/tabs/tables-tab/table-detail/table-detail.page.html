@@ -24,27 +24,35 @@
     <ion-card-header>
       <ion-card-title>{{ table?.name + ' - ' + table?.location }}</ion-card-title>
       <ion-card-subtitle>{{ table?.address}}</ion-card-subtitle>
+      <ion-card-subtitle class="age-range">
+        Range di età: {{ table?.minAge + '/' + table?.maxAge }}
+      </ion-card-subtitle>
     </ion-card-header>
+
 
     <ion-card-content>
       <div class="section-title">Partecipanti</div>
       <div class="participants">
         <ion-avatar *ngFor="let participant of table?.participantsMetadata">
-          <img [src]="participant.avatar" alt="Participant Avatar" class="participant-avatar" />
+          <img 
+            alt="Participant Avatar" 
+            class="participant-avatar" 
+            [src]="participant.avatar ? participant.avatar : 'assets/icons/avatar-placeholder.webp'" 
+          />
         </ion-avatar>
-        <ng-container *ngFor="let i of getPlaceholderParticipantsArray()">
-          <ion-avatar>
-            <img src="assets/icons/avatar-placeholder.webp" alt="Placeholder Avatar" class="participant-avatar" />
-          </ion-avatar>
-        </ng-container>
       </div>
-      <div class="age-range">Range di età: {{ table?.minAge + '/' + table?.maxAge }}</div>
-
-      <ion-button 
-          [disabled]="table?.participants === table?.totalSeats"
-          fill="outline"
-          > Partecipa
+      
+      <ion-button *ngIf="!hasUserJoined; else joined" 
+        [disabled]="table?.participants === table?.totalSeats"
+        (click)="joinTable()"
+        fill="outline"
+      > Partecipa
       </ion-button>
+      <ng-template #joined>
+        <div>
+          Stai partecipando
+        </div>
+      </ng-template>
     </ion-card-content>
   </ion-card>
 </ion-content>

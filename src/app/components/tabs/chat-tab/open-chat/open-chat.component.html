@@ -9,7 +9,6 @@
 
 <ion-content>
   <div class="chat-messages">
-    <!-- Loop over the chat messages and display them -->
     <div *ngFor="let message of chatMessages" [ngClass]="{ 'message-right': message.from === 'me' }">
       <div class="message-content">
         <div class="message-text">{{ message.text }}</div>

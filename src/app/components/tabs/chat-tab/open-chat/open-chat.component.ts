@@ -7,11 +7,11 @@ import { faker } from '@faker-js/faker';
   styleUrls: ['./open-chat.component.scss'],
 })
 export class OpenChatComponent implements OnInit {
+
   chatMessages: ChatMessage[] = [
     { from: 'me', text: 'Hello', timestamp: new Date() },
     { from: 'you', text: 'Hi', timestamp: new Date() },
     { from: 'me', text: 'How are you?', timestamp: new Date() },
-    // Add more chat messages here
   ];
 
   newMessage: string = '';
@@ -20,7 +20,7 @@ export class OpenChatComponent implements OnInit {
     this.generateRandomMessages();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     
   }
 
@@ -35,7 +35,7 @@ export class OpenChatComponent implements OnInit {
     }
   }
 
-  sendMessage() {
+  public sendMessage(): void {
     if (this.newMessage.trim() !== '') {
       const message: ChatMessage = {
         from: 'me',

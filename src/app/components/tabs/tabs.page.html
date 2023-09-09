@@ -5,7 +5,7 @@
 				<img *ngIf="profile?.['imageUrl']; else placheolder_avatar;" [src]="profile['imageUrl']" />
 				<ng-template #placheolder_avatar>
 					<div class="fallback">
-						<p>Scegli il tuo avatar</p>
+						<ion-icon aria-hidden="true" name="add"></ion-icon>
 					</div>
 				</ng-template>
 			</ion-avatar>

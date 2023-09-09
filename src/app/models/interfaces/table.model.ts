@@ -11,6 +11,7 @@ export interface Table {
   images?: string[];
   tags?: string;
   totalSeats?: number;
+  minMaxSeats?: number;
   participants?: number;
   maxAge?: number;
   minAge?: number;

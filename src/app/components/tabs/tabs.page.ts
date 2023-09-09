@@ -57,7 +57,4 @@ export class TabsPage {
     }
   }
 
-  openAddModal() {
-    console.log('open modal')
-  }
 }

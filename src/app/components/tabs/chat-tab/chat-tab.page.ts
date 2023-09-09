@@ -13,7 +13,7 @@ export class ChatTabPage {
 
   constructor(private navCtrl: NavController) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.generateMessage();
   }
 
@@ -25,7 +25,7 @@ export class ChatTabPage {
     };
   }
 
-  openChat() {
+  public openChat(): void {
     this.navCtrl.navigateForward(['/tabs/chat-tab/open-chat']);
   }
 }

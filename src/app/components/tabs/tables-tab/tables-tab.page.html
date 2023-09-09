@@ -5,13 +5,13 @@
   <ion-title>Tavoli aperti</ion-title>
 
   <ion-list>
-    <ion-item *ngFor="let table of tables">
+    <ion-item *ngFor="let table of tables$ | async">
 
       <ion-card>
         <img alt="Foto del locale" [src]="table?.images?.[0]" />
         <ion-card-header>
           <ion-card-title>{{ table.name + ' - ' + table.location }}</ion-card-title>
-          <ion-card-subtitle>{{ table.address + ' - ' + (table.time?.toDate() | date:'yyyy/MM/dd h:mm:ss a') }}</ion-card-subtitle>
+          <ion-card-subtitle>{{ table.address + ' - ' + (table.time | date:'yyyy/MM/dd h:mm:ss a') }}</ion-card-subtitle>
         </ion-card-header>
 
           <ion-card-content>
@@ -19,10 +19,13 @@
           </ion-card-content>
 
           <div class="card-footer">
-            <div>{{ table.participants + '/' + table.totalSeats}}</div>
+            <div class="seats-container">
+              <ion-icon class="seats-icon" name="people"></ion-icon>
+              <div>{{table.minMaxSeats}}</div>
+            </div>
 
             <ion-button 
-              [disabled]="table.participants === table.totalSeats"
+              [disabled]="table.participantsMetadata?.length === table.totalSeats"
               fill="outline"
               (click)="viewTable(table)"
               > Visualizza
@@ -34,7 +37,7 @@
     </ion-item>
   </ion-list>
 
-   <ion-infinite-scroll (ionInfinite)="loadMoreTables($event)">
+  <ion-infinite-scroll (ionInfinite)="onScroll()">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Caricando altri tavoli...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

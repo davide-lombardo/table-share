@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab-bar',
@@ -6,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tab-bar.component.scss'],
 })
 export class TabBarComponent implements OnInit {
-  constructor() {}
+  constructor(private navCtrl: NavController) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  openAddModal() {
-    
+  public goToAddTablePage(): void {
+    this.navCtrl.navigateForward(['/tabs/add-table']);
   }
 }

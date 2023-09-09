@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { User } from 'firebase/auth';
+import { JoinTableRequestDto } from 'src/app/models/interfaces/requests/JoinTableRequestDto';
 import { Table } from 'src/app/models/interfaces/table.model';
+import { AuthenticationService } from 'src/app/services/auth.service';
+import { TableService } from 'src/app/services/table.service';
 
 @Component({
   selector: 'app-table-detail',
@@ -9,8 +13,16 @@ import { Table } from 'src/app/models/interfaces/table.model';
 })
 export class TableDetailPage implements OnInit {
   table: Table | undefined;
+  user: User | null;
+  hasUserJoined = false;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private tableService: TableService,
+    private authService: AuthenticationService
+  ) {
+    this.user = this.authService.getLoggedUser();
+  }
 
   ngOnInit(): void {
     this.getTableData();
@@ -22,18 +34,16 @@ export class TableDetailPage implements OnInit {
     });
   }
 
-  public getPlaceholderParticipantsArray(): number[] {
-    const count = this.getPlaceholderParticipantsCount();
-    return Array(count).fill(0);
-  }
+  public joinTable(): void {
+    this.authService.getAvatarById(this.user?.uid).subscribe((value: any) => {
+      const request: JoinTableRequestDto = {
+        id: this.user?.uid,
+        username: this.user?.displayName,
+        avatarUrl: value['imageUrl'],
+      };
 
-  private getPlaceholderParticipantsCount(): number {
-    if (this.table) {
-      const actualParticipantsCount =
-        this.table.participantsMetadata?.length ?? 0;
-      return (this.table.totalSeats ?? 0) - actualParticipantsCount;
-    }
-    return 0;
+      this.tableService.joinTable(this.table?.id, request);
+      this.hasUserJoined = true;
+    });
   }
-
 }
